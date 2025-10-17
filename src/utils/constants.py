@@ -1,0 +1,2 @@
+CONFERENCES = "conferences"
+JOURNALS = "journals"
