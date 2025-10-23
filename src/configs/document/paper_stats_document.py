@@ -122,4 +122,4 @@ class PaperStatsDocument:
         annot.update()
 
     def get_paper_title(self, filename: str):
-        return self.doc.metadata[self.TITLE] if self.doc.metadata.title else filename
+        return self.doc.metadata[self.TITLE] if self.doc.metadata[self.TITLE] else filename
