@@ -1,11 +1,14 @@
 from typing import List
 
-from entities.camel_base_model import CamelBaseModel
+from pydantic import ConfigDict
+from pydantic.alias_generators import to_camel
+from pydantic.dataclasses import dataclass
 
 
-class SearchKeywordsRequest(CamelBaseModel):
+@dataclass(config=ConfigDict(alias_generator=to_camel, populate_by_name=True))
+class SearchKeywordsRequest:
     keywords: List[str]
     pdf_folder_path: str
     output_path: str
-    should_include_subfolders: bool = True
-    should_ignore_reference_section: bool = True
+    include_subfolders: bool = True
+    ignore_reference_section: bool = True

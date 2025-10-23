@@ -1,4 +1,9 @@
+from pydantic.dataclasses import dataclass
+
+
+@dataclass
 class KeywordStats:
+
     def __init__(self, keyword: str):
         self.keyword: str = keyword
         self.total = 0

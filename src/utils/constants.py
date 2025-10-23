@@ -1,2 +1,6 @@
 CONFERENCES = "conferences"
 JOURNALS = "journals"
+TRACK = "track"
+VOLUME = "volume"
+ISSUE = "issue"
+COUNT = "Count"

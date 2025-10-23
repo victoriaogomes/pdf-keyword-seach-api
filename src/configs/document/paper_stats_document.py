@@ -2,7 +2,7 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from pymupdf import pymupdf, Document
+from pymupdf import pymupdf
 
 from entities.conference_paper_stats import ConferencePaperStats
 from entities.enums.phase_status import PhaseStatus
@@ -13,11 +13,13 @@ from utils.constants import CONFERENCES, JOURNALS
 class PaperStatsDocument:
     BOOKMARK_1ST_LEVEL = 1
     BOOKMARK_2ND_LEVEL = 2
+    JOURNAL_FOLDER_PATTERN = r"Volume (\d+)(?: - Issue (\d+))?"
     KEYWORD_OCCURRENCE_HIGHLIGHT_COMMENT = "Occurrence {} of {}"
     KEYWORD_OCCURRENCE_1ST_LEVEL = "{} occurrences ({})"
     KEYWORD_OCCURRENCE_2ND_LEVEL = "{} occurrence {}"
-    JOURNAL_FOLDER_PATTERN = r"Volume (\d+)(?: - Issue (\d+))?"
+    LAST_ARRAY_INDEX = -1
     LOG_ERROR_PROCESSING_PAPER = "Error processing paper {}"
+    PINK_COLOR = "pink"
 
     def __init__(self, path: Path):
         self.doc = pymupdf.open(path)
@@ -50,23 +52,26 @@ class PaperStatsDocument:
         return self.paper_stats
 
     def save(self, output_path: str):
+        self.__update_paper_stats_phase()
+
         if self.toc:
             self.doc.set_toc(self.toc, collapse=2)
 
-            self.__update_paper_stats_phase()
-
             base_output_path = Path(output_path)
+            main_folder = JOURNALS.capitalize() if self.paper_stats.is_published_in_journal else CONFERENCES.capitalize()
 
-            processed_pdf_path = base_output_path / self.get_relative_subpath()
+            processed_pdf_path = base_output_path / Path(
+                main_folder + "/" + self.paper_stats.venue.upper() + "/" + self.path.stem)
             processed_pdf_path.parent.mkdir(parents=True, exist_ok=True)
 
             self.doc.save(processed_pdf_path, garbage=4, deflate=True)
         self.doc.close()
 
     def get_relative_subpath(self) -> Path:
-        for key in ("Conferences", "Journals"):
+        for key in (CONFERENCES.capitalize(), JOURNALS.capitalize()):
             if key in self.path.parts:
                 return Path(*self.path.parts[self.path.parts.index(key):])
+
         raise ValueError("Neither 'Conferences' nor 'Journals' found in path")
 
     def increase_keyword_total_count(self, count):
@@ -85,8 +90,8 @@ class PaperStatsDocument:
     def __get_paper_stats_object(self):
         parts = self.path.parts
         lower_parts = [p.lower() for p in parts]
-        file_name = parts[-1]
-        title = self.get_paper_title(self.doc)
+        filename = parts[self.LAST_ARRAY_INDEX]
+        title = self.get_paper_title(filename)
 
         try:
             idx = next(i for i, p in enumerate(lower_parts) if p in (CONFERENCES, JOURNALS))
@@ -97,44 +102,23 @@ class PaperStatsDocument:
             if publication_type.lower() == CONFERENCES.lower():
                 track = parts[idx + 3] if len(parts) > idx + 3 else None
                 return ConferencePaperStats(title=title, venue=venue, track=track,
-                                            publication_year=int(year), file_name=file_name)
+                                            publication_year=int(year), filename=filename)
             else:
                 match = re.match(self.JOURNAL_FOLDER_PATTERN, parts[idx + 3] if len(parts) > idx + 3 else None)
 
                 return JournalPaperStats(title=title, venue=venue, volume=int(match.group(1)),
-                                         publication_year=int(year), file_name=file_name,
+                                         publication_year=int(year), filename=filename,
                                          issue=int(match.group(2)) if match.group(2) else None)
         except StopIteration:
-            print(self.LOG_ERROR_PROCESSING_PAPER.format(lower_parts[-1]))
+            print(self.LOG_ERROR_PROCESSING_PAPER.format(lower_parts[self.LAST_ARRAY_INDEX]))
 
     def highlight_keyword(self, page, instance, keyword):
         annot = page.add_highlight_annot(instance)
-        annot.set_colors(stroke=pymupdf.pdfcolor["pink"])
+
+        annot.set_colors(stroke=pymupdf.pdfcolor[self.PINK_COLOR])
         annot.set_info(content=self.KEYWORD_OCCURRENCE_HIGHLIGHT_COMMENT.format(self.bookmark_counter[keyword],
                                                                                 keyword))
         annot.update()
 
-    def get_paper_title(self, doc: Document):
-        blocks = doc[0].get_text("dict")["blocks"]
-        spans = []
-        for b in blocks:
-            for line in b.get("lines", []):
-                for span in line.get("spans", []):
-                    text = span["text"].strip()
-                    if len(text) > 2:
-                        spans.append((span["size"], span["bbox"][1], text))
-
-        if not spans:
-            return ""
-
-        spans.sort(key=lambda x: (-x[0], x[1]))
-        max_font_size = spans[0][0]
-
-        title_lines = []
-        for size, y, text in spans:
-            if abs(size - max_font_size) < 1e-2:
-                title_lines.append(text)
-            else:
-                break
-
-        return " ".join(title_lines).strip()
+    def get_paper_title(self, filename: str):
+        return self.doc.metadata.title if self.doc.metadata.title else filename

@@ -1,29 +1,29 @@
 import json
-from typing import List
-
-from entities.paper_stats import PaperStats
 
 
 class JsonConverter:
 
     @staticmethod
-    def pdf_stats_list_to_json(pdf_stats_list: List[PaperStats]):
+    def paper_list_to_json(paper_list, venue):
         json_result = []
 
-        for pdf_stats in pdf_stats_list:
-            json_result.append(pdf_stats.to_dict())
+        for paper in paper_list:
+            paper["_id"] = str(paper["_id"])
+            json_result.append(paper)
 
-        with open("data.json", "w", encoding="utf-8") as f:
+        with open(f"papers-{venue}.json", "w", encoding="utf-8") as f:
             json.dump(json_result, f, ensure_ascii=False, indent=2)
 
     @staticmethod
-    def pdf_stats_list_to_ndjson(pdf_stats_list: List[PaperStats]):
+    def pdf_stats_list_to_ndjson(paper_list, venue):
         json_result = []
 
-        for pdf_stats in pdf_stats_list:
-            json_result.append(pdf_stats.to_dict())
+        for paper in paper_list:
+            paper["_id"] = str(paper["_id"])
+            json_result.append(paper)
 
-        with open("data.ndjson", "w", encoding="utf-8") as f:
+        with open(f"papers-{venue}.ndjson", "w", encoding="utf-8") as f:
             for doc in json_result:
-                f.write(json.dumps({"index": {"_index": "papers"}}, ensure_ascii=False) + "\n")
+                f.write(json.dumps({"index": {"_index": "papers", "_id": doc["_id"]}}, ensure_ascii=False) + "\n")
+                del doc["_id"]
                 f.write(json.dumps(doc, ensure_ascii=False) + "\n")

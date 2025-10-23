@@ -1,12 +1,14 @@
 from typing import List
 
+from pydantic.dataclasses import dataclass
+
 from entities.enums.phase_status import PhaseStatus
 from entities.keyword_stats import KeywordStats
 
-
+@dataclass
 class PaperStats:
     title: str
-    file_name: str
+    filename: str
     venue: str
     publication_year: int
     keyword_stats: List[KeywordStats]
@@ -15,19 +17,18 @@ class PaperStats:
     phase_1_status: PhaseStatus = PhaseStatus.PENDING
     phase_2_status: PhaseStatus = None
 
-    def __init__(self, title: str, venue: str, publication_year: int, file_name: str):
+    def __init__(self, title: str, venue: str, publication_year: int, filename: str):
         self.title = title
         self.venue = venue
         self.publication_year = publication_year
-        self.file_name = file_name
+        self.filename = filename
 
     def to_dict(self) -> dict:
-        # keywords = [keyword_stat.keyword for keyword_stat in self.keyword_stats if keyword_stat.total > 0]
-        # keywords_total = sum(keyword_stat.total for keyword_stat in self.keyword_stats)
         keyword_stats_dict = [keyword_stats.to_dict() for keyword_stats in self.keyword_stats]
+
         main_dict = {
             "title": self.title,
-            "filename": self.file_name,
+            "filename": self.filename,
             "venue": self.venue,
             "publication_year": self.publication_year,
             "keyword_stats": keyword_stats_dict,
