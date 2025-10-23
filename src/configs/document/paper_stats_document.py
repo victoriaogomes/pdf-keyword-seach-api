@@ -20,6 +20,7 @@ class PaperStatsDocument:
     LAST_ARRAY_INDEX = -1
     LOG_ERROR_PROCESSING_PAPER = "Error processing paper {}"
     PINK_COLOR = "pink"
+    TITLE = "title"
 
     def __init__(self, path: Path):
         self.doc = pymupdf.open(path)
@@ -121,4 +122,4 @@ class PaperStatsDocument:
         annot.update()
 
     def get_paper_title(self, filename: str):
-        return self.doc.metadata.title if self.doc.metadata.title else filename
+        return self.doc.metadata[self.TITLE] if self.doc.metadata.title else filename
