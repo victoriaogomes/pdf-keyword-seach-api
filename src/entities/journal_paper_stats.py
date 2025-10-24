@@ -1,18 +1,15 @@
 from typing import Optional
 
+from pydantic.dataclasses import dataclass
+
 from entities.paper_stats import PaperStats
 from utils.constants import VOLUME, ISSUE
 
-
+@dataclass
 class JournalPaperStats(PaperStats):
-    volume: int
-    issue: Optional[int]
-
-    def __init__(self, title: str, venue: str, volume: int, publication_year: int, filename: str, issue: int = None):
-        super().__init__(title, venue, publication_year, filename)
-        self.is_published_in_journal = True
-        self.volume = volume
-        self.issue = issue
+    volume: int = None
+    issue: Optional[int] = None
+    is_published_in_journal: bool = True
 
     def to_dict(self) -> dict:
         main_data = super().to_dict()

@@ -92,10 +92,10 @@ class PaperKeywordSearcher:
             keyword_col = 0 if keyword_coordinate.x0 < (page.rect.width / 2) else 1
             reference_col = 0 if reference_coordinate.x0 < (page.rect.width / 2) else 1
 
-            is_in_reference_page = reference_page_number == keyword_page_number
+            is_in_or_after_reference_page = keyword_page_number >= reference_page_number
             is_coordinate_in_reference_section = keyword_coordinate.y0 >= reference_coordinate.y0 or keyword_col > reference_col
 
-            return is_in_reference_page and is_coordinate_in_reference_section
+            return is_in_or_after_reference_page and is_coordinate_in_reference_section
         return False
 
     def get_references_page_and_coordinate(self, document: Document):

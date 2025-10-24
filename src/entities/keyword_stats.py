@@ -1,13 +1,12 @@
+from pydantic import Field
 from pydantic.dataclasses import dataclass
 
 
 @dataclass
 class KeywordStats:
-
-    def __init__(self, keyword: str):
-        self.keyword: str = keyword
-        self.total = 0
-        self.by_page = {}
+    keyword: str
+    total: int = 0
+    by_page: dict = Field(default_factory=dict)
 
     def add_occurrence(self, page_number: int, count: int = 1):
         self.total += count

@@ -1,9 +1,11 @@
-from typing import List
+from typing import List, Optional
 
+from pydantic import Field
 from pydantic.dataclasses import dataclass
 
 from entities.enums.phase_status import PhaseStatus
 from entities.keyword_stats import KeywordStats
+
 
 @dataclass
 class PaperStats:
@@ -11,17 +13,11 @@ class PaperStats:
     filename: str
     venue: str
     publication_year: int
-    keyword_stats: List[KeywordStats]
-    is_published_in_journal: bool
+    keyword_stats: List[KeywordStats] = Field(default_factory=list)
+    is_published_in_journal: bool = None
     keywords_total: int = 0
     phase_1_status: PhaseStatus = PhaseStatus.PENDING
-    phase_2_status: PhaseStatus = None
-
-    def __init__(self, title: str, venue: str, publication_year: int, filename: str):
-        self.title = title
-        self.venue = venue
-        self.publication_year = publication_year
-        self.filename = filename
+    phase_2_status: Optional[PhaseStatus] = None
 
     def to_dict(self) -> dict:
         keyword_stats_dict = [keyword_stats.to_dict() for keyword_stats in self.keyword_stats]

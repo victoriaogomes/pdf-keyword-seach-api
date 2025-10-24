@@ -43,13 +43,13 @@ class PaperStatsDataSource:
             collection = database[venue.lower()]
             collection.insert_many(paper_stats_in_venue)
 
-    def find_accepted_papers_by_venue(self, venue: str, fields: List[str] = None, phase_1_status: str = None,
-                                      phase_2_status: str = None) -> List[str]:
+    def find_accepted_papers_by_venue(self, venue: str, fields: List[str] = None, phase_1_status: PhaseStatus = None,
+                                      phase_2_status: PhaseStatus = None) -> List[str]:
         search_filter = {}
         if phase_1_status:
-            search_filter[Field.PHASE_1_STATUS] = phase_1_status
+            search_filter[Field.PHASE_1_STATUS] = phase_1_status.value
         if phase_2_status:
-            search_filter[Field.PHASE_2_STATUS] = phase_2_status
+            search_filter[Field.PHASE_2_STATUS] = phase_2_status.value
 
         projection = {}
 

@@ -3,6 +3,7 @@ from kink import inject
 
 from datasources.paper_stats_datasource import PaperStatsDataSource
 from entities.enums.output_format import OutputFormat
+from entities.enums.phase_status import PhaseStatus
 from utils.json_converter import JsonConverter
 from utils.xlsx_converter import XlsxConverter
 
@@ -14,8 +15,8 @@ class GetPapersByVenueUseCase:
     def __init__(self, paper_stats_datasource: PaperStatsDataSource):
         self.paper_stats_datasource = paper_stats_datasource
 
-    def execute(self, venue: str, output_format: OutputFormat, fields: str = None, phase_1_status: str = None,
-                phase_2_status: str = None) -> None:
+    def execute(self, venue: str, output_format: OutputFormat, fields: str = None, phase_1_status: PhaseStatus = None,
+                phase_2_status: PhaseStatus = None) -> None:
         field_list = fields.split(self.COMMA) if fields else None
         paper_list = self.paper_stats_datasource.find_accepted_papers_by_venue(venue, field_list, phase_1_status,
                                                                                phase_2_status)
