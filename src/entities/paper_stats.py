@@ -13,6 +13,7 @@ class PaperStats:
     filename: str
     venue: str
     publication_year: int
+    page_count: int
     keyword_stats: List[KeywordStats] = Field(default_factory=list)
     is_published_in_journal: bool = None
     keywords_total: int = 0
