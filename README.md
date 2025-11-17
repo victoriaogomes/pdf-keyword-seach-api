@@ -10,8 +10,6 @@ for specified keywords inside PDF files through an API request and generates enh
 terms highlighted. In addition, it builds a Table of Contents (TOC) section that groups every keyword found and summarizes 
 the total number of occurrences for each one.
 
----
-
 ## 🚀 Features
 
 - 🔍 Search for keywords in PDF folders 
@@ -31,7 +29,7 @@ the total number of occurrences for each one.
   - Export the summary in JSON or Excel (.xlsx) formats for easy analysis 
 - ⚡ API-driven processing 
   - Perform keyword searches programmatically through an API request, allowing automation and integration in larger workflows.
----
+
 
 ## 📂 Project Overview
 
@@ -58,8 +56,6 @@ To learn more about it: [Ready for changes with Hexagonal Architecture - by Netf
 
 
 ## 🛠️ Endpoints
-
----
 
 ## 1. 🔍 POST `/search`
 
