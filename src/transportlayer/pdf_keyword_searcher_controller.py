@@ -2,7 +2,6 @@ from http import HTTPMethod
 
 from fastapi import APIRouter, Body, HTTPException
 from kink import inject
-from pymupdf import message
 
 from entities.search_keywords_request import SearchKeywordsRequest
 from interactors.exceptions.no_pdf_found_exception import NoPdfFoundException
@@ -12,8 +11,6 @@ from interactors.search_keyword_use_case import SearchKeywordUseCase
 @inject
 class PdfKeywordSearcherController:
     PATH_POST_SEARCH = "/search"
-    PATH_GET_PAPERS = "/papers"
-    PATH_POST_UPDATE = "/update"
 
     def __init__(self, search_keyword_use_case: SearchKeywordUseCase, api_router: APIRouter):
         self.search_keyword_use_case = search_keyword_use_case
