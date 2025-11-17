@@ -4,6 +4,8 @@ from pydantic import ConfigDict
 from pydantic.alias_generators import to_camel
 from pydantic.dataclasses import dataclass
 
+from entities.enums.output_format import OutputFormat
+
 
 @dataclass(config=ConfigDict(alias_generator=to_camel, populate_by_name=True))
 class SearchKeywordsRequest:
@@ -12,3 +14,4 @@ class SearchKeywordsRequest:
     output_path: str
     include_subfolders: bool = True
     ignore_reference_section: bool = True
+    output_format: OutputFormat = OutputFormat.XLSX

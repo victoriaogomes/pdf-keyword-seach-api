@@ -6,7 +6,6 @@ from kink import inject
 from pymupdf import Document, Page
 
 from datasources.models.paper_stats_document import PaperStatsDocument
-from datasources.paper_stats_datasource import PaperStatsDataSource
 from entities.keyword_stats import KeywordStats
 from entities.paper_stats import PaperStats
 
@@ -25,9 +24,6 @@ class PaperKeywordSearcher:
 
     PIPE = "|"
     TEXT = "text"
-
-    def __init__(self, paper_stats_datasource: PaperStatsDataSource):
-        self.paper_stats_datasource = paper_stats_datasource
 
     def analyze_papers_in_path(self, path: str, keywords: List[str], should_include_subfolders: bool,
                                should_ignore_reference_section: bool, output_path: str) -> List[PaperStats]:
