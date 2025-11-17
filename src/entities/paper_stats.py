@@ -22,8 +22,8 @@ class PaperStats:
             "title": self.title,
             "filename": self.filename,
             "page_count": self.page_count,
-            "keyword_stats": keyword_stats_dict,
-            "keywords_total": self.keywords_total
+            "keywords_total": self.keywords_total,
+            "keyword_stats": keyword_stats_dict
         }
 
         return main_dict

@@ -1,21 +1,36 @@
 # 📄 PDF Keyword Search API
-This is an application designed to **search for keywords inside PDF files** through an API request, and save the PDFs with
-the searched words highlighted.
+![Python](https://img.shields.io/badge/python-3.13-blue)
+![Version](https://img.shields.io/badge/version-1.0.0-green)
+![License](https://img.shields.io/badge/license-Apache%202.0-blue)
+
+
+
+This application helps researchers automatically filter and analyze keywords in conference and journal papers. It searches 
+for specified keywords inside PDF files through an API request and generates enhanced versions of the PDFs with all matched 
+terms highlighted. In addition, it builds a Table of Contents (TOC) section that groups every keyword found and summarizes 
+the total number of occurrences for each one.
 
 ---
 
 ## 🚀 Features
 
-- 🔍 Keyword search in PDF folders
-- 📚 Save a new PDF file in a specified folder with the searched keywords highlighted 
-- 📝 Save a file with the information regarding the all the processed PDF files, containing:
-  - Title
-  - File name
-  - Amount of pages
-  - Total amount of keywords found
-  - Amount of keywords detailed by keyword
-- 📦 Supports multiple output formats (i.e., json and xlsx)
-
+- 🔍 Search for keywords in PDF folders 
+  - Scan entire PDF folders to find occurrences of specified keywords, allowing the user to customize if subfolders
+  should also be considered in the search
+- 📚 Generate enhanced PDFs 
+  - Save a new PDF for each processed file in a specified output folder with all matched keywords highlighted
+  - Adds a Table of Contents (TOC) to each PDF grouping each keyword occurrence
+- 📝 Generate a detailed summary file 
+  - Save a file summarizing all processed PDFs, including:
+    - Title 
+    - File name 
+    - Number of pages 
+    - Total keywords found 
+    - Detailed count of each keyword by page 
+- 📦 Supports multiple output formats 
+  - Export the summary in JSON or Excel (.xlsx) formats for easy analysis 
+- ⚡ API-driven processing 
+  - Perform keyword searches programmatically through an API request, allowing automation and integration in larger workflows.
 ---
 
 ## 📂 Project Overview
