@@ -10,7 +10,6 @@ from utils.constants import BOOKMARK_1ST_LEVEL, BOOKMARK_2ND_LEVEL
 
 
 class PaperStatsDocument:
-    JOURNAL_FOLDER_PATTERN = r"Volume (\d+)(?: - Issue (\d+))?"
     KEYWORD_OCCURRENCE_HIGHLIGHT_COMMENT = "Occurrence {} of {}"
     LAST_ARRAY_INDEX = -1
     LOG_ERROR_PROCESSING_PAPER = "Error processing paper {}"
