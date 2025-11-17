@@ -32,4 +32,4 @@ class SearchKeywordUseCase:
             elif search_keyword_request.output_format == OutputFormat.JSON:
                 JsonConverter.to_json(papers=results, output_path=search_keyword_request.output_path)
         else:
-            raise NoPdfFoundException(message=self.NO_PDF_FOUND_ERROR, code=500)
+            raise NoPdfFoundException(message=self.NO_PDF_FOUND_ERROR, code=400)
