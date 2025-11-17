@@ -27,6 +27,7 @@ class PaperStats:
             "title": self.title,
             "filename": self.filename,
             "venue": self.venue,
+            "page_count": self.page_count,
             "publication_year": self.publication_year,
             "keyword_stats": keyword_stats_dict,
             "keywords_total": self.keywords_total,

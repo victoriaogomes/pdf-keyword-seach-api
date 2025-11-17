@@ -33,7 +33,7 @@ class XlsxConverter:
         )
 
         for i, paper in enumerate(paper_list, start=1):
-            row = [i, str(paper._id), paper.filename.rstrip(".pdf")]
+            row = [i, str(paper._id), paper.filename.rstrip(".pdf"), paper.keywords_total]
             worksheet.add_row(row=row)
 
         worksheet.style_table(table_name=venue)

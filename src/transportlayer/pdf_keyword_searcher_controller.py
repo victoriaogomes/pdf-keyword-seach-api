@@ -44,9 +44,12 @@ class PdfKeywordSearcherController:
                    venue: str = Query(None, description="Filter papers by venue"),
                    output_format: OutputFormat = Query(OutputFormat.XLSX, description="Output format")):
         self.get_papers_by_venue_use_case.execute(venue, output_format, fields, phase_1_status, phase_2_status)
+
         return {"message": "success"}
 
     def update_paper_status(self, file_path: str = Query(None,
                                                          description="Path of the excel file that should be used to update the paper status"),
                             venue: str = Query(None, description="Venue to which the papers belong to")):
         self.update_paper_status_use_case.execute(file_path, venue)
+
+        return {"message": "success"}

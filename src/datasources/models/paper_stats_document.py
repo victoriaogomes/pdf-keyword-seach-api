@@ -35,7 +35,8 @@ class PaperStatsDocument:
 
         parent_index = self.parent_bookmarks[keyword]
         parent = self.toc[parent_index]
-        parent.add_child(TocEntry(page_number=page_number, level=BOOKMARK_2ND_LEVEL, keyword=keyword))
+        parent.add_child(TocEntry(page_number=page_number, level=BOOKMARK_2ND_LEVEL, keyword=keyword,
+                                  counter=parent.counter + 1))
 
     def get_doc(self):
         return self.doc

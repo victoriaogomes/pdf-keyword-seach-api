@@ -26,10 +26,12 @@ class UpdatePaperStatusUseCase:
                 elif status == PhaseStatus.ACCEPTED.value:
                     accepted_papers.append(row['Id'])
 
-            self.paper_stats_datasource.update_phase_2_paper_status(accepted_papers, venue, PhaseStatus.ACCEPTED)
-            self.open_search_datasource.update_records(accepted_papers, PhaseStatus.ACCEPTED)
-            self.paper_stats_datasource.update_phase_2_paper_status(rejected_papers, venue, PhaseStatus.REJECTED)
-            self.open_search_datasource.update_records(rejected_papers, PhaseStatus.REJECTED)
+            if len(accepted_papers) > 0:
+                self.paper_stats_datasource.update_phase_2_paper_status(accepted_papers, venue, PhaseStatus.ACCEPTED)
+                self.open_search_datasource.update_records(accepted_papers, PhaseStatus.ACCEPTED)
+            if len(rejected_papers) > 0:
+                self.paper_stats_datasource.update_phase_2_paper_status(rejected_papers, venue, PhaseStatus.REJECTED)
+                self.open_search_datasource.update_records(rejected_papers, PhaseStatus.REJECTED)
         except FileNotFoundError:
             print(f"Error: The file '{file_path}' was not found.")
         except Exception as e:
