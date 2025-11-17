@@ -61,7 +61,7 @@ To learn more about it: [Ready for changes with Hexagonal Architecture - by Netf
 
 ---
 
-## 1. 🔍 POST `/search_keywords`
+## 1. 🔍 POST `/search`
 
 Searches for keywords inside PDF files stored in a given folder.
 
@@ -74,7 +74,7 @@ This endpoint expects the following three parameters in the request body:
 Moreover, there are three optional parameters:
 - **include_subfolders**: specifies if the application must also look for PDF files in the subfolders of the folder received in the "pdf_folder_path parameter", and has a default value of `True`
 - **ignore_reference_section**: specifies if the application must ignore the references section when looking for the received keywords, or if it must search in this section as well, and has a default value of `True`
-- **output_format**: selects if the output of the PDF processing should be saved in `xlsx` or in a `json` file, and has a default value of of `xlsx`
+- **output_format**: selects if the output of the PDF processing should be saved in `xlsx` or in a `json` file, and has a default value of `xlsx`
 
 ### **Curl example**
 ```bash
