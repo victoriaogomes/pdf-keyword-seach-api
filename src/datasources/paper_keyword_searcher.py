@@ -21,8 +21,6 @@ class PaperKeywordSearcher:
 
     LOG_AMOUNT_OF_PAPERS_TO_PROCESS = "There are {} papers to process in the chosen folder."
     LOG_STEP_UPDATE = "Finished processing paper {}/{}: {}"
-
-    PIPE = "|"
     TEXT = "text"
 
     def analyze_papers_in_path(self, path: str, keywords: List[str], should_include_subfolders: bool,

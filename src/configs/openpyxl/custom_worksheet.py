@@ -38,6 +38,8 @@ class CustomWorksheet:
                     if len(str(cell.value)) > max_length:
                         max_length = len(str(cell.value))
                 except TypeError:
+                    # Must ignore cells with values that cannot be converted to string
+                    # or whose length cannot be determined
                     pass
             adjusted_width = (max_length + 2)
             self.worksheet.column_dimensions[column].width = adjusted_width
