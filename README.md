@@ -1,7 +1,7 @@
 # 📄 PDF Keyword Search API
 ![Python](https://img.shields.io/badge/python-3.13-blue)
 ![Version](https://img.shields.io/badge/version-1.0.0-green)
-![License](https://img.shields.io/badge/license-Apache%202.0-blue)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 
 
@@ -57,11 +57,11 @@ To learn more about it: [Ready for changes with Hexagonal Architecture - by Netf
 
 ## 🛠️ Endpoints
 
-## 1. 🔍 POST `/search`
+### 1. 🔍 POST `/search`
 
 Searches for keywords inside PDF files stored in a given folder.
 
-### Request body parameters
+#### Request body parameters
 This endpoint expects the following three parameters in the request body:
 - **keywords**: a list containing all the keywords that the application must search for in the PDF files
 - **pdf_folder_path**: a path to a folder where all PDF files that must be processed are stored
