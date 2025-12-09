@@ -2,13 +2,13 @@ import uvicorn
 from fastapi import FastAPI
 
 from configs.di import Di
-from transportlayer.pdf_keyword_searcher_controller import PdfKeywordSearcherController
+from transportlayer.paper_controller import PaperController
 
 app = FastAPI()
 
 Di.set_up()
 
-pdf_keyword_searcher_controller = PdfKeywordSearcherController()
+pdf_keyword_searcher_controller = PaperController()
 
 app.include_router(pdf_keyword_searcher_controller.router)
 
