@@ -88,15 +88,15 @@ class PaperStatsDocument:
 
             if publication_type.lower() == CONFERENCES.lower():
                 track = parts[idx + 3] if len(parts) > idx + 3 else None
-                return ConferencePaperStats(title=title, venue="", track="", page_count=self.doc.page_count,
-                                            publication_year=0, filename=filename)
+                return ConferencePaperStats(title=title, venue=venue, track=track, page_count=self.doc.page_count,
+                                            publication_year=year, filename=filename)
             else:
                 match = re.match(self.JOURNAL_FOLDER_PATTERN, parts[idx + 3] if len(parts) > idx + 3 else None)
                 volume = int(match.group(1)) if match.group(1) else 0
                 issue = int(match.group(2)) if match.group(2) else 0
 
-                return JournalPaperStats(title=title, venue="", volume=0, publication_year=0,
-                                         filename=filename, page_count=self.doc.page_count, issue=0)
+                return JournalPaperStats(title=title, venue=venue, volume=volume, publication_year=year,
+                                         filename=filename, page_count=self.doc.page_count, issue=issue)
         except StopIteration:
             print(self.LOG_ERROR_PROCESSING_PAPER.format(lower_parts[self.LAST_ARRAY_INDEX]))
 

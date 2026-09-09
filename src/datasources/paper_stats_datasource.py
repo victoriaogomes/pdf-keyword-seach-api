@@ -1,4 +1,5 @@
 from collections import defaultdict
+from datetime import datetime, timezone
 from typing import List
 
 from bson import ObjectId
@@ -50,6 +51,12 @@ class PaperStatsDataSource:
             search_filter[Field.PHASE_1_STATUS] = phase_1_status.value
         if phase_2_status:
             search_filter[Field.PHASE_2_STATUS] = phase_2_status.value
+
+        search_filter[Field.ID] = {
+            MongoDBCommand.GTE: ObjectId.from_datetime(
+                datetime(2026, 1, 1, 0, 0, 0, tzinfo=timezone.utc)
+            )
+        }
 
         projection = {}
 
